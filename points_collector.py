@@ -7,6 +7,7 @@ clock = pygame.time.Clock()
 
 WHITE_COLOR = (255, 255, 255)
 BLUE_COLOR = (30, 144, 255)
+RED_COLOR = (205, 92, 92)
 
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
@@ -28,10 +29,20 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = (mouse_x, mouse_y)
 
 
+class Point(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.center = (
+            random.randint(10, SCREEN_WIDTH - 10),
+            random.randint(10, SCREEN_HEIGHT - 10)
+        )
+        self.radius = 10
+
+
 player = Player()
+points = [Point() for i in range(10)]
 
 while True:
-
     for event in pygame.event.get():
         if event.type == pygame.MOUSEMOTION:
             player.move()
@@ -40,6 +51,12 @@ while True:
             sys.exit()
 
     screen.fill(WHITE_COLOR)
+
     pygame.draw.rect(screen, BLUE_COLOR, player.rect)
+    for point in points:
+        pygame.draw.circle(screen, RED_COLOR, point.center, point.radius)
+        # if pygame.sprite.collide_circle(player, point):
+        #     points.remove(point)
+
     pygame.display.flip()
     clock.tick(20)
