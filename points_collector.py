@@ -37,6 +37,11 @@ class Point(pygame.sprite.Sprite):
             random.randint(10, SCREEN_HEIGHT - 10)
         )
         self.radius = 10
+        self.rect = self.draw()
+
+    def draw(self):
+        circle_rect = pygame.draw.circle(screen, RED_COLOR, self.center, self.radius)
+        return circle_rect
 
 
 player = Player()
@@ -54,9 +59,9 @@ while True:
 
     pygame.draw.rect(screen, BLUE_COLOR, player.rect)
     for point in points:
-        pygame.draw.circle(screen, RED_COLOR, point.center, point.radius)
-        # if pygame.sprite.collide_circle(player, point):
-        #     points.remove(point)
+        point.draw()
+        if pygame.Rect.colliderect(player.rect, point.rect):
+            points.remove(point)
 
     pygame.display.flip()
     clock.tick(20)
