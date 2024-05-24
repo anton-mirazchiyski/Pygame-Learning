@@ -1,4 +1,6 @@
-import pygame, sys
+import sys
+import pygame
+
 import random
 
 pygame.init()
@@ -8,6 +10,7 @@ clock = pygame.time.Clock()
 WHITE_COLOR = (255, 255, 255)
 BLUE_COLOR = (30, 144, 255)
 RED_COLOR = (205, 92, 92)
+GREEN_COLOR = (8, 143, 143)
 
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
@@ -16,12 +19,15 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Points Collector')
 screen.fill(WHITE_COLOR)
 
+score_font = pygame.font.SysFont('arial', 24)
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.rect = pygame.rect.Rect((500, 500), (40, 40))
         self.rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        self.score = 0
 
     def move(self):
         pygame.mouse.set_visible(False)
@@ -57,11 +63,15 @@ while True:
 
     screen.fill(WHITE_COLOR)
 
+    player_score = score_font.render(f'Your score: {player.score}', True, GREEN_COLOR)
     pygame.draw.rect(screen, BLUE_COLOR, player.rect)
+
     for point in points:
         point.draw()
         if pygame.Rect.colliderect(player.rect, point.rect):
+            player.score += 1
             points.remove(point)
 
+    screen.blit(player_score, (40, 40))
     pygame.display.flip()
     clock.tick(20)
