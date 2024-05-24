@@ -23,10 +23,16 @@ score_font = pygame.font.SysFont('arial', 24)
 
 
 class Player(pygame.sprite.Sprite):
+    SIZE = (140, 140)
+
     def __init__(self):
         super().__init__()
-        self.rect = pygame.rect.Rect((500, 500), (40, 40))
-        self.rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        self.surf = pygame.image.load('Idle (6).png').convert_alpha()
+        self.surf.set_colorkey(WHITE_COLOR)
+        self.surf = pygame.transform.smoothscale(self.surf, self.SIZE)
+        self.rect = self.surf.get_rect(center=(
+            SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2
+        ))
         self.score = 0
 
     def move(self):
@@ -64,7 +70,6 @@ while True:
     screen.fill(WHITE_COLOR)
 
     player_score = score_font.render(f'Your score: {player.score}', True, GREEN_COLOR)
-    pygame.draw.rect(screen, BLUE_COLOR, player.rect)
 
     for point in points:
         point.draw()
@@ -72,6 +77,7 @@ while True:
             player.score += 1
             points.remove(point)
 
+    screen.blit(player.surf, player.rect)
     screen.blit(player_score, (40, 40))
     pygame.display.flip()
     clock.tick(20)
