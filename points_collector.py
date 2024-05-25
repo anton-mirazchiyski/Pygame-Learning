@@ -8,6 +8,7 @@ pygame.init()
 clock = pygame.time.Clock()
 
 WHITE_COLOR = (255, 255, 255)
+LIGHT_YELLOW = (255, 255, 224)
 BLUE_COLOR = (30, 144, 255)
 RED_COLOR = (205, 92, 92)
 GREEN_COLOR = (8, 143, 143)
@@ -17,7 +18,7 @@ SCREEN_HEIGHT = 700
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Points Collector')
-screen.fill(WHITE_COLOR)
+screen.fill(LIGHT_YELLOW)
 
 score_font = pygame.font.SysFont('arial', 24)
 
@@ -26,6 +27,19 @@ player_running_images = [
     pygame.image.load('Run (2).png').convert_alpha(),
     pygame.image.load('Run (3).png').convert_alpha(),
     pygame.image.load('Run (4).png').convert_alpha(),
+]
+
+dinosaur_walking_images = [
+    pygame.image.load('images/dino_sprite/walking/Walk (1).png').convert_alpha(),
+    pygame.image.load('images/dino_sprite/walking/Walk (2).png').convert_alpha(),
+    pygame.image.load('images/dino_sprite/walking/Walk (3).png').convert_alpha(),
+    pygame.image.load('images/dino_sprite/walking/Walk (4).png').convert_alpha(),
+    pygame.image.load('images/dino_sprite/walking/Walk (5).png').convert_alpha(),
+    pygame.image.load('images/dino_sprite/walking/Walk (6).png').convert_alpha(),
+    pygame.image.load('images/dino_sprite/walking/Walk (7).png').convert_alpha(),
+    pygame.image.load('images/dino_sprite/walking/Walk (8).png').convert_alpha(),
+    pygame.image.load('images/dino_sprite/walking/Walk (9).png').convert_alpha(),
+    pygame.image.load('images/dino_sprite/walking/Walk (10).png').convert_alpha(),
 ]
 
 
@@ -37,7 +51,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.surf = pygame.image.load('Idle (6).png').convert_alpha()
-        self.surf.set_colorkey(WHITE_COLOR)
+        self.surf.set_colorkey(LIGHT_YELLOW)
         self.surf = pygame.transform.smoothscale(self.surf, self.SIZE)
         self.rect = self.surf.get_rect(center=(
             SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2
@@ -73,18 +87,26 @@ class Point(pygame.sprite.Sprite):
 
 class Obstacle(pygame.sprite.Sprite):
     SIZE = (100, 90)
+    MOVEMENT_VAR = 0
 
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load('images/Walk (1).png').convert_alpha()
-        self.surf.set_colorkey(WHITE_COLOR)
+        self.surf = pygame.image.load('images/dino_sprite/walking/Walk (1).png').convert_alpha()
+        self.surf.set_colorkey(LIGHT_YELLOW)
         self.surf = pygame.transform.smoothscale(self.surf, self.SIZE)
         self.rect = self.surf.get_rect(center=(
             30, random.randint(10, SCREEN_HEIGHT - 10)
         ))
 
     def move(self):
-        self.rect.move_ip(3, 0)
+        self.rect.move_ip(4, 0)
+
+        if self.MOVEMENT_VAR >= len(dinosaur_walking_images):
+            self.MOVEMENT_VAR = 0
+        image = dinosaur_walking_images[self.MOVEMENT_VAR]
+        image = pygame.transform.smoothscale(image, self.SIZE)
+        self.surf = image
+        self.MOVEMENT_VAR += 1
 
 
 player = Player()
@@ -100,7 +122,7 @@ while True:
             sys.exit()
 
     obstacle.move()
-    screen.fill(WHITE_COLOR)
+    screen.fill(LIGHT_YELLOW)
 
     player_score = score_font.render(f'Your score: {player.score}', True, GREEN_COLOR)
 
