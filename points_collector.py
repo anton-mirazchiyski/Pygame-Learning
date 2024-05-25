@@ -21,9 +21,18 @@ screen.fill(WHITE_COLOR)
 
 score_font = pygame.font.SysFont('arial', 24)
 
+player_running_images = [
+    pygame.image.load('Run (1).png').convert_alpha(),
+    pygame.image.load('Run (2).png').convert_alpha(),
+    pygame.image.load('Run (3).png').convert_alpha(),
+    pygame.image.load('Run (4).png').convert_alpha(),
+]
+
 
 class Player(pygame.sprite.Sprite):
     SIZE = (140, 140)
+    MOVING = False
+    MOVEMENT_VAR = 0
 
     def __init__(self):
         super().__init__()
@@ -37,8 +46,14 @@ class Player(pygame.sprite.Sprite):
 
     def move(self):
         pygame.mouse.set_visible(False)
+
+        if self.MOVEMENT_VAR >= len(player_running_images):
+            self.MOVEMENT_VAR = 0
         mouse_x, mouse_y = pygame.mouse.get_pos()
         self.rect.center = (mouse_x, mouse_y)
+        self.surf = player_running_images[self.MOVEMENT_VAR]
+        self.surf = pygame.transform.smoothscale(self.surf, self. SIZE)
+        self.MOVEMENT_VAR += 1
 
 
 class Point(pygame.sprite.Sprite):
