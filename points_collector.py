@@ -13,7 +13,7 @@ RED_COLOR = (205, 92, 92)
 GREEN_COLOR = (8, 143, 143)
 
 SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 800
+SCREEN_HEIGHT = 700
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Points Collector')
@@ -71,8 +71,25 @@ class Point(pygame.sprite.Sprite):
         return circle_rect
 
 
+class Obstacle(pygame.sprite.Sprite):
+    SIZE = (100, 90)
+
+    def __init__(self):
+        super().__init__()
+        self.surf = pygame.image.load('images/Walk (1).png').convert_alpha()
+        self.surf.set_colorkey(WHITE_COLOR)
+        self.surf = pygame.transform.smoothscale(self.surf, self.SIZE)
+        self.rect = self.surf.get_rect(center=(
+            30, random.randint(10, SCREEN_HEIGHT - 10)
+        ))
+
+    def move(self):
+        self.rect.move_ip(3, 0)
+
+
 player = Player()
 points = [Point() for i in range(10)]
+obstacle = Obstacle()
 
 while True:
     for event in pygame.event.get():
@@ -82,6 +99,7 @@ while True:
             pygame.quit()
             sys.exit()
 
+    obstacle.move()
     screen.fill(WHITE_COLOR)
 
     player_score = score_font.render(f'Your score: {player.score}', True, GREEN_COLOR)
@@ -94,5 +112,6 @@ while True:
 
     screen.blit(player.surf, player.rect)
     screen.blit(player_score, (40, 40))
+    screen.blit(obstacle.surf, obstacle.rect)
     pygame.display.flip()
     clock.tick(20)
