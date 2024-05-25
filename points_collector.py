@@ -21,6 +21,7 @@ pygame.display.set_caption('Points Collector')
 screen.fill(LIGHT_YELLOW)
 
 score_font = pygame.font.SysFont('arial', 24)
+game_over_font = pygame.font.SysFont('arial', 40)
 
 player_running_images = [
     pygame.image.load('Run (1).png').convert_alpha(),
@@ -143,6 +144,11 @@ while True:
         if pygame.Rect.colliderect(player.rect, point.rect):
             player.score += 1
             points.remove(point)
+
+    if pygame.sprite.spritecollideany(player, obstacles):
+        screen.fill((0, 0, 0))
+        game_over = game_over_font.render('You were hit. Game over!', True, GREEN_COLOR)
+        screen.blit(game_over, (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
 
     screen.blit(player.surf, player.rect)
     for obstacle in obstacles:
