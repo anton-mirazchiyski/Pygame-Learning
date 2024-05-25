@@ -98,7 +98,7 @@ class Obstacle(pygame.sprite.Sprite):
             30, random.randint(10, SCREEN_HEIGHT - 10)
         ))
 
-    def move(self):
+    def update(self):
         self.rect.move_ip(4, 0)
 
         if self.MOVEMENT_VAR >= len(dinosaur_walking_images):
@@ -109,9 +109,18 @@ class Obstacle(pygame.sprite.Sprite):
         self.MOVEMENT_VAR += 1
 
 
+def out_of_screen(group):
+    for member in group:
+        if member.rect.x > SCREEN_WIDTH:
+            member.kill()
+            return True
+
+
 player = Player()
 points = [Point() for i in range(10)]
-obstacle = Obstacle()
+
+obstacles = pygame.sprite.Group()
+
 
 while True:
     for event in pygame.event.get():
@@ -121,10 +130,13 @@ while True:
             pygame.quit()
             sys.exit()
 
-    obstacle.move()
     screen.fill(LIGHT_YELLOW)
-
     player_score = score_font.render(f'Your score: {player.score}', True, GREEN_COLOR)
+
+    if len(obstacles) < 3 or (out_of_screen(obstacles) and len(obstacles) < 3):
+        obstacle = Obstacle()
+        obstacles.add(obstacle)
+    obstacles.update()
 
     for point in points:
         point.draw()
@@ -133,7 +145,8 @@ while True:
             points.remove(point)
 
     screen.blit(player.surf, player.rect)
+    for obstacle in obstacles:
+        screen.blit(obstacle.surf, obstacle.rect)
     screen.blit(player_score, (40, 40))
-    screen.blit(obstacle.surf, obstacle.rect)
     pygame.display.flip()
     clock.tick(20)
