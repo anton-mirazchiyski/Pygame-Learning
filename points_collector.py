@@ -1,4 +1,6 @@
 import sys
+import time
+
 import pygame
 
 import random
@@ -130,6 +132,9 @@ while True:
         obstacles.add(obstacle)
     obstacles.update()
 
+    if not points:
+        time.sleep(0.1)
+        points = [Point() for i in range(10)]
     for point in points:
         point.draw()
         if pygame.Rect.colliderect(player.rect, point.rect):
