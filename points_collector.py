@@ -31,16 +31,7 @@ player_running_images = [
 ]
 
 dinosaur_walking_images = [
-    pygame.image.load('images/dino_sprite/walking/Walk (1).png').convert_alpha(),
-    pygame.image.load('images/dino_sprite/walking/Walk (2).png').convert_alpha(),
-    pygame.image.load('images/dino_sprite/walking/Walk (3).png').convert_alpha(),
-    pygame.image.load('images/dino_sprite/walking/Walk (4).png').convert_alpha(),
-    pygame.image.load('images/dino_sprite/walking/Walk (5).png').convert_alpha(),
-    pygame.image.load('images/dino_sprite/walking/Walk (6).png').convert_alpha(),
-    pygame.image.load('images/dino_sprite/walking/Walk (7).png').convert_alpha(),
-    pygame.image.load('images/dino_sprite/walking/Walk (8).png').convert_alpha(),
-    pygame.image.load('images/dino_sprite/walking/Walk (9).png').convert_alpha(),
-    pygame.image.load('images/dino_sprite/walking/Walk (10).png').convert_alpha(),
+    pygame.image.load(f'images/dino_sprite/walking/Walk ({number}).png').convert_alpha() for number in range(1, 10 + 1)
 ]
 
 
