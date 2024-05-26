@@ -24,10 +24,10 @@ score_font = pygame.font.SysFont('arial', 24)
 game_over_font = pygame.font.SysFont('arial', 40)
 
 player_running_images = [
-    pygame.image.load('Run (1).png').convert_alpha(),
-    pygame.image.load('Run (2).png').convert_alpha(),
-    pygame.image.load('Run (3).png').convert_alpha(),
-    pygame.image.load('Run (4).png').convert_alpha(),
+    pygame.image.load('images/redhat_boy_sprite/running/Run (1).png').convert_alpha(),
+    pygame.image.load('images/redhat_boy_sprite/running/Run (2).png').convert_alpha(),
+    pygame.image.load('images/redhat_boy_sprite/running/Run (3).png').convert_alpha(),
+    pygame.image.load('images/redhat_boy_sprite/running/Run (4).png').convert_alpha(),
 ]
 
 dinosaur_walking_images = [
@@ -42,7 +42,7 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load('Idle (6).png').convert_alpha()
+        self.surf = pygame.image.load('images/redhat_boy_sprite/idle/Idle (6).png').convert_alpha()
         self.surf.set_colorkey(LIGHT_YELLOW)
         self.surf = pygame.transform.smoothscale(self.surf, self.SIZE)
         self.rect = self.surf.get_rect(center=(
