@@ -110,8 +110,35 @@ def out_of_screen(group):
             return True
 
 
+class PointsHandler:
+    MAX_POINTS_ON_SCREEN = 10
+
+    def __init__(self,):
+        self.current_points = self.create_points()
+
+    def create_points(self):
+        return [Point() for i in range(self.MAX_POINTS_ON_SCREEN)]
+
+    def renew_points(self):
+        if not self.current_points:
+            time.sleep(0.1)
+            self.current_points = self.create_points()
+
+    def draw_points(self):
+        self.renew_points()
+        for current_point in self.current_points:
+            current_point.draw()
+
+    def collect_points(self, current_player):
+        for current_point in self.current_points:
+            if pygame.Rect.colliderect(current_player.rect, current_point.rect):
+                player.score += 1
+                self.current_points.remove(current_point)
+
+
 player = Player()
-points = [Point() for i in range(10)]
+
+points_handler = PointsHandler()
 
 obstacles = pygame.sprite.Group()
 
@@ -132,14 +159,8 @@ while True:
         obstacles.add(obstacle)
     obstacles.update()
 
-    if not points:
-        time.sleep(0.1)
-        points = [Point() for i in range(10)]
-    for point in points:
-        point.draw()
-        if pygame.Rect.colliderect(player.rect, point.rect):
-            player.score += 1
-            points.remove(point)
+    points_handler.draw_points()
+    points_handler.collect_points(player)
 
     if pygame.sprite.spritecollideany(player, obstacles):
         screen.fill((0, 0, 0))
