@@ -2,7 +2,7 @@ import random
 
 import pygame
 
-from points_collector_game.configurations import LIGHT_YELLOW, SCREEN_HEIGHT, dinosaur_walking_images
+from points_collector_game.configurations import LIGHT_YELLOW, SCREEN_HEIGHT, dinosaur_walking_images, SCREEN_WIDTH
 
 
 class Obstacle(pygame.sprite.Sprite):
@@ -27,3 +27,21 @@ class Obstacle(pygame.sprite.Sprite):
         image = pygame.transform.smoothscale(image, self.SIZE)
         self.surf = image
         self.MOVEMENT_VAR += 1
+
+
+class ObstaclesHandler:
+    MAX_OBSTACLES_ON_SCREEN = 3
+
+    def __init__(self):
+        self.obstacles = pygame.sprite.Group()
+
+    def add_obstacle(self):
+        self.remove_out_of_screen_obstacle()
+        if len(self.obstacles) < self.MAX_OBSTACLES_ON_SCREEN:
+            obstacle = Obstacle()
+            self.obstacles.add(obstacle)
+
+    def remove_out_of_screen_obstacle(self):
+        for obstacle in self.obstacles:
+            if obstacle.rect.x > SCREEN_WIDTH:
+                obstacle.kill()
