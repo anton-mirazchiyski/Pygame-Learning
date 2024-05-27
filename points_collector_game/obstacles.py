@@ -31,6 +31,7 @@ class Obstacle(pygame.sprite.Sprite):
 
 class ObstaclesHandler:
     MAX_OBSTACLES_ON_SCREEN = 3
+    DAMAGE_FOR_OBSTACLE = 35
 
     def __init__(self):
         self.obstacles = pygame.sprite.Group()
@@ -45,3 +46,13 @@ class ObstaclesHandler:
         for obstacle in self.obstacles:
             if obstacle.rect.x > SCREEN_WIDTH:
                 obstacle.kill()
+
+    def check_collision_with_player(self, current_player):
+        if pygame.sprite.spritecollideany(current_player, self.obstacles):
+            self.damage_player(current_player)
+
+    def damage_player(self, current_player):
+        if current_player.health - self.DAMAGE_FOR_OBSTACLE < 0:
+            current_player.health = 0
+        else:
+            current_player.health -= self.DAMAGE_FOR_OBSTACLE

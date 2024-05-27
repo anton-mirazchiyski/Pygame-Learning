@@ -5,7 +5,8 @@ from points_collector_game.configurations import LIGHT_YELLOW, SCREEN_WIDTH, SCR
 
 class Player(pygame.sprite.Sprite):
     SIZE = (140, 140)
-    MOVING = False
+    MAX_HEALTH = 100
+    # MOVING = False
     MOVEMENT_VAR = 0
 
     def __init__(self):
@@ -16,6 +17,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect(center=(
             SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2
         ))
+        self.health = self.MAX_HEALTH
         self.score = 0
 
     def move(self):

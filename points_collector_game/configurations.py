@@ -18,6 +18,7 @@ pygame.display.set_caption('Points Collector')
 screen.fill(LIGHT_YELLOW)
 
 score_font = pygame.font.SysFont('arial', 24)
+player_health_font = pygame.font.SysFont('arial', 24)
 game_over_font = pygame.font.SysFont('arial', 40)
 
 player_running_images = [

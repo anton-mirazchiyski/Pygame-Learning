@@ -4,7 +4,7 @@ import sys
 import pygame
 
 from points_collector_game.configurations import SCREEN_WIDTH, SCREEN_HEIGHT, screen, LIGHT_YELLOW, \
-    score_font, GREEN_COLOR, game_over_font, clock
+    score_font, GREEN_COLOR, game_over_font, clock, player_health_font, BLUE_COLOR
 from points_collector_game.obstacles import ObstaclesHandler
 from points_collector_game.player import Player
 from points_collector_game.points import PointsHandler
@@ -29,19 +29,17 @@ while True:
 
     screen.fill(LIGHT_YELLOW)
     player_score = score_font.render(f'Your score: {player.score}', True, GREEN_COLOR)
+    player_health = player_health_font.render(f'Health: {player.health}', True, BLUE_COLOR)
 
     points_handler.draw_points()
     points_handler.collect_points(player)
     obstacles_handler.obstacles.update()
-
-    if pygame.sprite.spritecollideany(player, obstacles_handler.obstacles):
-        screen.fill((0, 0, 0))
-        game_over = game_over_font.render('You were hit. Game over!', True, GREEN_COLOR)
-        screen.blit(game_over, (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
+    obstacles_handler.check_collision_with_player(player)
 
     screen.blit(player.surf, player.rect)
     for obstacle in obstacles_handler.obstacles:
         screen.blit(obstacle.surf, obstacle.rect)
     screen.blit(player_score, (40, 40))
+    screen.blit(player_health, (200, 40))
     pygame.display.flip()
     clock.tick(20)
