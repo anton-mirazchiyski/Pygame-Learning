@@ -1,4 +1,3 @@
-import random
 import sys
 
 import pygame
@@ -29,7 +28,7 @@ while True:
 
     screen.fill(LIGHT_YELLOW)
     player_score = score_font.render(f'Your score: {player.score}', True, GREEN_COLOR)
-    player_health = player_health_font.render(f'Health: {player.health}', True, BLUE_COLOR)
+    player_health = player_health_font.render(f'Health: {player.health}', True, (170, 74, 68))
 
     points_handler.draw_points()
     points_handler.collect_points(player)

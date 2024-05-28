@@ -48,7 +48,7 @@ class ObstaclesHandler:
                 obstacle.kill()
 
     def check_collision_with_player(self, current_player):
-        if pygame.sprite.spritecollideany(current_player, self.obstacles):
+        if pygame.sprite.spritecollide(current_player, self.obstacles, True):
             self.damage_player(current_player)
 
     def damage_player(self, current_player):
