@@ -27,6 +27,17 @@ class Player(pygame.sprite.Sprite):
             self.MOVEMENT_VAR = 0
         mouse_x, mouse_y = pygame.mouse.get_pos()
         self.rect.center = (mouse_x, mouse_y)
+
         self.surf = player_running_images[self.MOVEMENT_VAR]
         self.surf = pygame.transform.smoothscale(self.surf, self. SIZE)
         self.MOVEMENT_VAR += 1
+
+    def collect_points(self, points):
+        for current_point in points:
+            if pygame.Rect.colliderect(self.rect, current_point.rect):
+                self.score += 1
+                points.remove(current_point)
+
+    # def increase_score_every_hundred_points(self):
+    #     if self.score % 100 == 0:
+    #         self.score += 10

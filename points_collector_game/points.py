@@ -39,9 +39,3 @@ class PointsHandler:
         self.renew_points()
         for current_point in self.current_points:
             current_point.draw()
-
-    def collect_points(self, current_player):
-        for current_point in self.current_points:
-            if pygame.Rect.colliderect(current_player.rect, current_point.rect):
-                current_player.score += 1
-                self.current_points.remove(current_point)

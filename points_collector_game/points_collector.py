@@ -31,7 +31,7 @@ while True:
     player_health = player_health_font.render(f'Health: {player.health}', True, (170, 74, 68))
 
     points_handler.draw_points()
-    points_handler.collect_points(player)
+    player.collect_points(points_handler.current_points)
     obstacles_handler.obstacles.update()
     obstacles_handler.check_collision_with_player(player)
 
