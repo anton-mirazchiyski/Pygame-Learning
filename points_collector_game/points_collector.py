@@ -2,8 +2,8 @@ import sys
 
 import pygame
 
-from points_collector_game.configurations import SCREEN_WIDTH, SCREEN_HEIGHT, screen, LIGHT_YELLOW, \
-    score_font, GREEN_COLOR, game_over_font, clock, player_health_font, BLUE_COLOR
+from points_collector_game.configurations import screen, LIGHT_YELLOW, \
+    score_font, GREEN_COLOR, clock, player_health_font
 from points_collector_game.obstacles import ObstaclesHandler
 from points_collector_game.player import Player
 from points_collector_game.points import PointsHandler
@@ -17,7 +17,7 @@ PLACE_OBSTACLE = pygame.USEREVENT + 1
 pygame.time.set_timer(PLACE_OBSTACLE, 2000)
 
 PLACE_BONUS_POINT = pygame.USEREVENT + 2
-pygame.time.set_timer(PLACE_BONUS_POINT, 3000)
+pygame.time.set_timer(PLACE_BONUS_POINT, 20000)
 
 while True:
     for event in pygame.event.get():
@@ -36,7 +36,9 @@ while True:
     player_health = player_health_font.render(f'Health: {player.health}', True, (170, 74, 68))
 
     points_handler.draw_points()
+    points_handler.draw_bonus_points()
     player.collect_points(points_handler.current_points)
+    player.collect_bonus_points(points_handler.bonus_points)
     obstacles_handler.obstacles.update()
     obstacles_handler.check_collision_with_player(player)
 

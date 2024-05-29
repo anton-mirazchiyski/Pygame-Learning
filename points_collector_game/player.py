@@ -36,9 +36,11 @@ class Player(pygame.sprite.Sprite):
     def collect_points(self, points):
         for current_point in points:
             if pygame.Rect.colliderect(self.rect, current_point.rect):
-                if isinstance(current_point, NormalPoint):
-                    self.score += 1
-                elif isinstance(current_point, BonusPoint):
-                    self.score += 10
+                self.score += 1
                 points.remove(current_point)
 
+    def collect_bonus_points(self, points):
+        for current_point in points:
+            if pygame.Rect.colliderect(self.rect, current_point.rect):
+                self.score += 15
+                points.remove(current_point)

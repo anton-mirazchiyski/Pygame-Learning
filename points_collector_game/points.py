@@ -47,6 +47,7 @@ class BonusPoint(Point):
 class PointsHandler:
     MAX_NORMAL_POINTS_ON_SCREEN = 10
     MAX_BONUS_POINTS_ON_SCREEN = 3
+    MAX_POINTS_ON_SCREEN = MAX_NORMAL_POINTS_ON_SCREEN + MAX_BONUS_POINTS_ON_SCREEN
 
     def __init__(self):
         self.current_points = self.create_points()
@@ -69,5 +70,7 @@ class PointsHandler:
         if len(self.bonus_points) < self.MAX_BONUS_POINTS_ON_SCREEN:
             bonus_point = BonusPoint()
             self.bonus_points.append(bonus_point)
-        self.current_points.extend(self.bonus_points)
 
+    def draw_bonus_points(self):
+        for bonus_point in self.bonus_points:
+            bonus_point.draw()
