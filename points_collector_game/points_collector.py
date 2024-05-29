@@ -16,10 +16,15 @@ obstacles_handler = ObstaclesHandler()
 PLACE_OBSTACLE = pygame.USEREVENT + 1
 pygame.time.set_timer(PLACE_OBSTACLE, 2000)
 
+PLACE_BONUS_POINT = pygame.USEREVENT + 2
+pygame.time.set_timer(PLACE_BONUS_POINT, 3000)
+
 while True:
     for event in pygame.event.get():
         if event.type == PLACE_OBSTACLE:
             obstacles_handler.add_obstacle()
+        if event.type == PLACE_BONUS_POINT:
+            points_handler.add_bonus_point()
         if event.type == pygame.MOUSEMOTION:
             player.move()
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
@@ -39,6 +44,6 @@ while True:
     for obstacle in obstacles_handler.obstacles:
         screen.blit(obstacle.surf, obstacle.rect)
     screen.blit(player_score, (40, 40))
-    screen.blit(player_health, (200, 40))
+    screen.blit(player_health, (40, 600))
     pygame.display.flip()
     clock.tick(20)

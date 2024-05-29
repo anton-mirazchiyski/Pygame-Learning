@@ -1,6 +1,7 @@
 import pygame
 
 from points_collector_game.configurations import LIGHT_YELLOW, SCREEN_WIDTH, SCREEN_HEIGHT, player_running_images
+from points_collector_game.points import NormalPoint, BonusPoint
 
 
 class Player(pygame.sprite.Sprite):
@@ -35,9 +36,9 @@ class Player(pygame.sprite.Sprite):
     def collect_points(self, points):
         for current_point in points:
             if pygame.Rect.colliderect(self.rect, current_point.rect):
-                self.score += 1
+                if isinstance(current_point, NormalPoint):
+                    self.score += 1
+                elif isinstance(current_point, BonusPoint):
+                    self.score += 10
                 points.remove(current_point)
 
-    # def increase_score_every_hundred_points(self):
-    #     if self.score % 100 == 0:
-    #         self.score += 10
