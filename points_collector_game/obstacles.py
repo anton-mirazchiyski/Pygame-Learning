@@ -18,6 +18,7 @@ class Obstacle(pygame.sprite.Sprite):
             30, random.randint(10, SCREEN_HEIGHT - 10)
         ))
         self.rect.width -= 40
+        self.is_visible = True
 
     def update(self):
         self.rect.move_ip(4, 0)
@@ -48,9 +49,20 @@ class ObstaclesHandler:
             if obstacle.rect.x > SCREEN_WIDTH:
                 obstacle.kill()
 
+    def handle_collided_obstacles(self, collided_obstacles, player):
+        current_time = pygame.time.get_ticks()
+        for obstacle in collided_obstacles:
+            if current_time % 3 == 0:
+                obstacle.is_visible = not obstacle.is_visible
+                if obstacle.rect.x > player.rect.x:
+                    obstacle.kill()
+                    self.damage_player(player)
+
     def check_collision_with_player(self, current_player):
-        if pygame.sprite.spritecollide(current_player, self.obstacles, True):
-            self.damage_player(current_player)
+        collided_obstacles = pygame.sprite.spritecollide(current_player, self.obstacles, False)
+        if collided_obstacles:
+            self.handle_collided_obstacles(collided_obstacles, current_player)
+            # self.damage_player(current_player)
 
     def damage_player(self, current_player):
         if current_player.health - self.DAMAGE_FOR_OBSTACLE < 0:
