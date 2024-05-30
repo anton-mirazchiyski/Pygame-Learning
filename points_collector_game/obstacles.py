@@ -17,6 +17,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect(center=(
             30, random.randint(10, SCREEN_HEIGHT - 10)
         ))
+        self.rect.width -= 40
 
     def update(self):
         self.rect.move_ip(4, 0)

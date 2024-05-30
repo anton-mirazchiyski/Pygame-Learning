@@ -17,6 +17,8 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Points Collector')
 screen.fill(LIGHT_YELLOW)
 
+pygame.mouse.set_visible(False)
+
 score_font = pygame.font.SysFont('arial', 24)
 player_health_font = pygame.font.SysFont('cambria', 24)
 game_over_font = pygame.font.SysFont('arial', 40)

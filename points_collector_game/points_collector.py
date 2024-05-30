@@ -43,8 +43,10 @@ while True:
     obstacles_handler.check_collision_with_player(player)
 
     screen.blit(player.surf, player.rect)
+    # pygame.draw.rect(screen, (0, 0, 0), player.rect, 1)
     for obstacle in obstacles_handler.obstacles:
         screen.blit(obstacle.surf, obstacle.rect)
+        # pygame.draw.rect(screen, (0, 0, 0), obstacle.rect, 1)
     screen.blit(player_score, (40, 40))
     screen.blit(player_health, (40, 600))
     pygame.display.flip()
