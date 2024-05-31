@@ -7,6 +7,7 @@ from points_collector_game.configurations import LIGHT_YELLOW, SCREEN_HEIGHT, di
 
 class Obstacle(pygame.sprite.Sprite):
     SIZE = (100, 90)
+    DAMAGE = 35
     MOVEMENT_VAR = 0
 
     def __init__(self):
@@ -33,7 +34,6 @@ class Obstacle(pygame.sprite.Sprite):
 
 class ObstaclesHandler:
     MAX_OBSTACLES_ON_SCREEN = 3
-    DAMAGE_FOR_OBSTACLE = 35
 
     def __init__(self):
         self.obstacles = pygame.sprite.Group()
@@ -50,22 +50,15 @@ class ObstaclesHandler:
                 obstacle.kill()
 
     def handle_collided_obstacles(self, collided_obstacles, player):
-        current_time = pygame.time.get_ticks()
+        collision_time = pygame.time.get_ticks()
+        # print(collision_time)
         for obstacle in collided_obstacles:
-            if current_time % 3 == 0:
+            if collision_time % 3 == 0:
                 obstacle.is_visible = not obstacle.is_visible
-                if obstacle.rect.x > player.rect.x:
-                    obstacle.kill()
-                    self.damage_player(player)
+                # obstacle.kill()
+                # player.take_damage(obstacle)
 
     def check_collision_with_player(self, current_player):
         collided_obstacles = pygame.sprite.spritecollide(current_player, self.obstacles, False)
         if collided_obstacles:
             self.handle_collided_obstacles(collided_obstacles, current_player)
-            # self.damage_player(current_player)
-
-    def damage_player(self, current_player):
-        if current_player.health - self.DAMAGE_FOR_OBSTACLE < 0:
-            current_player.health = 0
-        else:
-            current_player.health -= self.DAMAGE_FOR_OBSTACLE

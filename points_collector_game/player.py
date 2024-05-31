@@ -41,3 +41,9 @@ class Player(pygame.sprite.Sprite):
             if pygame.Rect.colliderect(self.rect, current_point.rect):
                 self.score += 15
                 points.remove(current_point)
+
+    def take_damage(self, obstacle):
+        if self.health - obstacle.DAMAGE < 0:
+            self.health = 0
+        else:
+            self.health -= obstacle.DAMAGE
