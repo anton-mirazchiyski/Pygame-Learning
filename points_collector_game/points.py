@@ -4,7 +4,8 @@ from abc import ABC, abstractmethod
 
 import pygame
 
-from points_collector_game.configurations import SCREEN_WIDTH, SCREEN_HEIGHT, screen, RED_COLOR, BLUE_COLOR
+from points_collector_game.configurations import SCREEN_WIDTH, SCREEN_HEIGHT, screen, RED_COLOR, BLUE_COLOR, \
+    GOLDEN_COLOR
 
 
 class Point(ABC):
@@ -44,6 +45,10 @@ class BonusPoint(Point):
         return circle_rect
 
 
+class SuperPoint(BonusPoint):
+    COLOR = GOLDEN_COLOR
+
+
 class PointsHandler:
     MAX_NORMAL_POINTS_ON_SCREEN = 10
     MAX_BONUS_POINTS_ON_SCREEN = 3
@@ -67,10 +72,19 @@ class PointsHandler:
             current_point.draw()
 
     def add_bonus_point(self):
-        if len(self.bonus_points) < self.MAX_BONUS_POINTS_ON_SCREEN:
+        if self.can_add_bonus_point:
             bonus_point = BonusPoint()
             self.bonus_points.append(bonus_point)
+
+    def add_super_point(self):
+        if self.can_add_bonus_point:
+            super_point = SuperPoint()
+            self.bonus_points.append(super_point)
 
     def draw_bonus_points(self):
         for bonus_point in self.bonus_points:
             bonus_point.draw()
+
+    @property
+    def can_add_bonus_point(self):
+        return len(self.bonus_points) < self.MAX_BONUS_POINTS_ON_SCREEN

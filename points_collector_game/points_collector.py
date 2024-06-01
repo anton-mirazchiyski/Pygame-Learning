@@ -19,12 +19,17 @@ pygame.time.set_timer(PLACE_OBSTACLE, 2000)
 PLACE_BONUS_POINT = pygame.USEREVENT + 2
 pygame.time.set_timer(PLACE_BONUS_POINT, 20000)
 
+PLACE_SUPER_BONUS_POINT = pygame.USEREVENT + 3
+pygame.time.set_timer(PLACE_SUPER_BONUS_POINT, 50000)
+
 while True:
     for event in pygame.event.get():
         if event.type == PLACE_OBSTACLE:
             obstacles_handler.add_obstacle()
         if event.type == PLACE_BONUS_POINT:
             points_handler.add_bonus_point()
+        if event.type == PLACE_SUPER_BONUS_POINT:
+            points_handler.add_super_point()
         if event.type == pygame.MOUSEMOTION:
             player.move()
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):

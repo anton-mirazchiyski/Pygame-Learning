@@ -1,6 +1,7 @@
 import pygame
 
 from points_collector_game.configurations import LIGHT_YELLOW, SCREEN_WIDTH, SCREEN_HEIGHT, player_running_images
+from points_collector_game.points import SuperPoint
 
 
 class Player(pygame.sprite.Sprite):
@@ -39,7 +40,10 @@ class Player(pygame.sprite.Sprite):
     def collect_bonus_points(self, points):
         for current_point in points:
             if pygame.Rect.colliderect(self.rect, current_point.rect):
-                self.score += 15
+                if isinstance(current_point, SuperPoint):
+                    self.score += 50
+                else:
+                    self.score += 15
                 points.remove(current_point)
 
     def take_damage(self, obstacle):
