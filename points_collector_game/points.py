@@ -49,14 +49,14 @@ class SuperPoint(BonusPoint):
     COLOR = DARK_GRAY
 
 
+# pygame.draw.rect(screen, (0, 0, 0), current_point.rect, 1)
+
+
 class PointsHandler:
     MAX_NORMAL_POINTS_ON_SCREEN = 10
-    MAX_BONUS_POINTS_ON_SCREEN = 3
-    MAX_POINTS_ON_SCREEN = MAX_NORMAL_POINTS_ON_SCREEN + MAX_BONUS_POINTS_ON_SCREEN
 
     def __init__(self):
         self.current_points = self.create_points()
-        self.bonus_points = []
 
     def create_points(self):
         return [NormalPoint() for _ in range(self.MAX_NORMAL_POINTS_ON_SCREEN)]
@@ -82,8 +82,15 @@ class PointsHandler:
         self.renew_points()
         for current_point in self.current_points:
             current_point.draw()
-            # pygame.draw.rect(screen, (0, 0, 0), current_point.rect, 1)
         self.handle_overlapping_points()
+
+
+class BonusPointsHandler(PointsHandler):
+    MAX_BONUS_POINTS_ON_SCREEN = 3
+
+    def __init__(self):
+        super().__init__()
+        self.bonus_points = []
 
     def add_bonus_point(self):
         if self.can_add_bonus_point:
