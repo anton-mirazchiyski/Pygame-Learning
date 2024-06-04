@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 import pygame
 
 from points_collector_game.configurations import SCREEN_WIDTH, SCREEN_HEIGHT, screen, RED_COLOR, BLUE_COLOR, \
-    GOLDEN_COLOR
+    DARK_GRAY
 
 
 class Point(ABC):
@@ -46,7 +46,7 @@ class BonusPoint(Point):
 
 
 class SuperPoint(BonusPoint):
-    COLOR = GOLDEN_COLOR
+    COLOR = DARK_GRAY
 
 
 class PointsHandler:
@@ -66,10 +66,24 @@ class PointsHandler:
             time.sleep(0.1)
             self.current_points = self.create_points()
 
+    def handle_overlapping_points(self):
+        i = 1
+        for first_point in self.current_points:
+            other_points = self.current_points[:i - 1] + self.current_points[i:]
+            for second_point in other_points:
+                if pygame.Rect.colliderect(first_point.rect, second_point.rect):
+                    self.current_points.remove(second_point)
+                    new_point = NormalPoint()
+                    self.current_points.append(new_point)
+                    new_point.draw()
+            i += 1
+
     def draw_points(self):
         self.renew_points()
         for current_point in self.current_points:
             current_point.draw()
+            # pygame.draw.rect(screen, (0, 0, 0), current_point.rect, 1)
+        self.handle_overlapping_points()
 
     def add_bonus_point(self):
         if self.can_add_bonus_point:
