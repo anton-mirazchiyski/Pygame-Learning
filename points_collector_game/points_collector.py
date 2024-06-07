@@ -2,12 +2,13 @@ import sys
 
 import pygame
 
-from points_collector_game.configurations import screen, LIGHT_YELLOW, \
-    score_font, GREEN_COLOR, clock, player_health_font
+from points_collector_game.configurations import screen, LIGHT_YELLOW, clock
+from points_collector_game.game_text import TextHandler
 from points_collector_game.obstacles import ObstaclesHandler
 from points_collector_game.player import Player
 from points_collector_game.points import PointsHandler, BonusPointsHandler
 
+text_handler = TextHandler()
 player = Player()
 points_handler = PointsHandler()
 bonus_points_handler = BonusPointsHandler()
@@ -37,10 +38,12 @@ while True:
             sys.exit()
 
     screen.fill(LIGHT_YELLOW)
-    player_score = score_font.render(f'Your score: {player.score}', True, GREEN_COLOR)
-    player_health = player_health_font.render(f'Health: {player.health}', True, (170, 74, 68))
 
     points_handler.draw_points()
+    points_handler.handle_overlapping_with_text(
+        text_handler.handle_player_score(player.score)[1],
+        text_handler.handle_player_health(player.health)[1]
+    )
     bonus_points_handler.draw_bonus_points()
     player.collect_points(points_handler.current_points)
     player.collect_bonus_points(bonus_points_handler.bonus_points)
@@ -51,7 +54,12 @@ while True:
     for obstacle in obstacles_handler.obstacles:
         if obstacle.is_visible:
             screen.blit(obstacle.surf, obstacle.rect)
-    screen.blit(player_score, (40, 40))
-    screen.blit(player_health, (40, 600))
+    screen.blit(
+        text_handler.handle_player_score(player.score)[0],
+        text_handler.handle_player_score(player.score)[1])
+    screen.blit(
+        text_handler.handle_player_health(player.health)[0],
+        text_handler.handle_player_health(player.health)[1])
+
     pygame.display.flip()
     clock.tick(20)
