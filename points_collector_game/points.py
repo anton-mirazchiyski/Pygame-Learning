@@ -78,6 +78,15 @@ class PointsHandler:
                     new_point.draw()
             i += 1
 
+    def handle_overlapping_with_text(self, *args):
+        for point in self.current_points:
+            for text_rect in args:
+                if pygame.Rect.colliderect(point.rect, text_rect):
+                    self.current_points.remove(point)
+                    new_point = NormalPoint()
+                    self.current_points.append(new_point)
+                    new_point.draw()
+
     def draw_points(self):
         self.renew_points()
         for current_point in self.current_points:
