@@ -44,7 +44,13 @@ while True:
         text_handler.handle_player_score(player.score)[1],
         text_handler.handle_player_health(player.health)[1]
     )
+
     bonus_points_handler.draw_bonus_points()
+    bonus_points_handler.handle_overlapping_with_text(
+        text_handler.handle_player_score(player.score)[1],
+        text_handler.handle_player_health(player.health)[1]
+    )
+
     player.collect_points(points_handler.current_points)
     player.collect_bonus_points(bonus_points_handler.bonus_points)
     obstacles_handler.obstacles.update()

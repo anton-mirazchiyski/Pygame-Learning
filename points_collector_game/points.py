@@ -49,9 +49,6 @@ class SuperPoint(BonusPoint):
     COLOR = DARK_GRAY
 
 
-# pygame.draw.rect(screen, (0, 0, 0), current_point.rect, 1)
-
-
 class PointsHandler:
     MAX_NORMAL_POINTS_ON_SCREEN = 10
 
@@ -66,26 +63,26 @@ class PointsHandler:
             time.sleep(0.1)
             self.current_points = self.create_points()
 
+    def replace_point(self, point):
+        self.current_points.remove(point)
+        new_point = NormalPoint()
+        self.current_points.append(new_point)
+        new_point.draw()
+
     def handle_overlapping_points(self):
         i = 1
         for first_point in self.current_points:
             other_points = self.current_points[:i - 1] + self.current_points[i:]
             for second_point in other_points:
                 if pygame.Rect.colliderect(first_point.rect, second_point.rect):
-                    self.current_points.remove(second_point)
-                    new_point = NormalPoint()
-                    self.current_points.append(new_point)
-                    new_point.draw()
+                    self.replace_point(second_point)
             i += 1
 
     def handle_overlapping_with_text(self, *args):
         for point in self.current_points:
             for text_rect in args:
                 if pygame.Rect.colliderect(point.rect, text_rect):
-                    self.current_points.remove(point)
-                    new_point = NormalPoint()
-                    self.current_points.append(new_point)
-                    new_point.draw()
+                    self.replace_point(point)
 
     def draw_points(self):
         self.renew_points()
@@ -111,7 +108,23 @@ class BonusPointsHandler(PointsHandler):
             super_point = SuperPoint()
             self.bonus_points.append(super_point)
 
+    def handle_overlapping_points(self):
+        for point in self.current_points:
+            for bonus_point in self.bonus_points:
+                if pygame.Rect.colliderect(point.rect, bonus_point.rect):
+                    super().replace_point(point)
+
+    def handle_overlapping_with_text(self, *args):
+        for point in self.bonus_points:
+            for text_rect in args:
+                if pygame.Rect.colliderect(point.rect, text_rect):
+                    self.bonus_points.remove(point)
+                    new_point = BonusPoint() if isinstance(point, BonusPoint) else SuperPoint()
+                    self.bonus_points.append(new_point)
+                    new_point.draw()
+
     def draw_bonus_points(self):
+        self.handle_overlapping_points()
         for bonus_point in self.bonus_points:
             bonus_point.draw()
 
