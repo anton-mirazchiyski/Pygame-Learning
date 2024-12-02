@@ -54,12 +54,16 @@ while True:
     player.collect_points(points_handler.current_points)
     player.collect_bonus_points(bonus_points_handler.bonus_points)
     obstacles_handler.obstacles.update()
-    obstacles_handler.check_collision_with_player(player)
 
     screen.blit(player.surf, player.rect)
+
     for obstacle in obstacles_handler.obstacles:
         if obstacle.is_visible:
             screen.blit(obstacle.surf, obstacle.rect)
+    collided_obstacle = pygame.sprite.spritecollideany(player, obstacles_handler.obstacles)
+    if collided_obstacle:
+        obstacles_handler.handle_collided_obstacle(collided_obstacle, player)
+
     screen.blit(
         text_handler.handle_player_score(player.score)[0],
         text_handler.handle_player_score(player.score)[1])

@@ -51,17 +51,9 @@ class ObstaclesHandler:
                 obstacle.kill()
 
     @staticmethod
-    def handle_collided_obstacles(collided_obstacles, player):
-        collision_time = pygame.time.get_ticks()
-        for obstacle in collided_obstacles:
-            if collision_time % 3 == 0:
-                obstacle.is_visible = not obstacle.is_visible
-                obstacle.visibility_interval += 1
-                if obstacle.visibility_interval > 3:
-                    obstacle.kill()
-                    player.take_damage(obstacle)
-
-    def check_collision_with_player(self, current_player):
-        collided_obstacles = pygame.sprite.spritecollide(current_player, self.obstacles, False)
-        if collided_obstacles:
-            self.handle_collided_obstacles(collided_obstacles, current_player)
+    def handle_collided_obstacle(collided_obstacle, player):
+        if collided_obstacle.visibility_interval > 2:
+            player.take_damage(collided_obstacle)
+            collided_obstacle.kill()
+        collided_obstacle.is_visible = not collided_obstacle.is_visible
+        collided_obstacle.visibility_interval += 1
