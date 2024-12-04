@@ -60,9 +60,12 @@ while True:
     for obstacle in obstacles_handler.obstacles:
         if obstacle.is_visible:
             screen.blit(obstacle.surf, obstacle.rect)
+        if obstacle.has_collided:
+            obstacles_handler.handle_collided_obstacle(obstacle, player)
+
     collided_obstacle = pygame.sprite.spritecollideany(player, obstacles_handler.obstacles)
     if collided_obstacle:
-        obstacles_handler.handle_collided_obstacle(collided_obstacle, player)
+        collided_obstacle.has_collided = True
 
     screen.blit(
         text_handler.handle_player_score(player.score)[0],

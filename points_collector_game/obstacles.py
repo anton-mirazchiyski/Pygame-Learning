@@ -20,6 +20,7 @@ class Obstacle(pygame.sprite.Sprite):
         ))
         self.rect.width -= 40
         self.is_visible = True
+        self.has_collided = False
         self.visibility_interval = 0
 
     def update(self):
