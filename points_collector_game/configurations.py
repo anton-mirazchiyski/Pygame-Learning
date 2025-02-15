@@ -25,6 +25,10 @@ score_font = pygame.font.SysFont('arial', 24)
 player_health_font = pygame.font.SysFont('cambria', 24)
 game_over_font = pygame.font.SysFont('arial', 40)
 
+player_idle_images = [
+    pygame.image.load(f'images/redhat_boy_sprite/idle/Idle ({number}).png').convert_alpha() for number in range(1, 10 + 1)
+]
+
 player_running_images = [
     pygame.image.load('images/redhat_boy_sprite/running/Run (1).png').convert_alpha(),
     pygame.image.load('images/redhat_boy_sprite/running/Run (2).png').convert_alpha(),

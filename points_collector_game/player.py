@@ -1,12 +1,14 @@
 import pygame
 
-from points_collector_game.configurations import LIGHT_YELLOW, SCREEN_WIDTH, SCREEN_HEIGHT, player_running_images
+from points_collector_game.configurations import LIGHT_YELLOW, SCREEN_WIDTH, SCREEN_HEIGHT, player_running_images, \
+    player_idle_images
 from points_collector_game.points import SuperPoint
 
 
 class Player(pygame.sprite.Sprite):
     SIZE = (140, 140)
     MAX_HEALTH = 100
+    IDLE_VAR = 0
     MOVEMENT_VAR = 0
 
     def __init__(self):
@@ -21,6 +23,14 @@ class Player(pygame.sprite.Sprite):
         self.health = self.MAX_HEALTH
         self.score = 0
 
+    def idle(self):
+        if self.IDLE_VAR >= len(player_idle_images):
+            self.IDLE_VAR = 0
+        self.surf = player_idle_images[self.IDLE_VAR]
+        self.surf = pygame.transform.smoothscale(self.surf, self.SIZE)
+
+        self.IDLE_VAR += 1
+
     def move(self):
         if self.MOVEMENT_VAR >= len(player_running_images):
             self.MOVEMENT_VAR = 0
@@ -28,7 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = (mouse_x, mouse_y)
 
         self.surf = player_running_images[self.MOVEMENT_VAR]
-        self.surf = pygame.transform.smoothscale(self.surf, self. SIZE)
+        self.surf = pygame.transform.smoothscale(self.surf, self.SIZE)
         self.MOVEMENT_VAR += 1
 
     def collect_points(self, points):
