@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from points_collector_game.configurations import screen, LIGHT_YELLOW, clock
+from points_collector_game.events import PLACE_OBSTACLE, PLACE_BONUS_POINT, PLACE_SUPER_BONUS_POINT
 from points_collector_game.game_text import TextHandler
 from points_collector_game.obstacles import ObstaclesHandler
 from points_collector_game.player import Player
@@ -13,15 +14,6 @@ player = Player()
 points_handler = PointsHandler()
 bonus_points_handler = BonusPointsHandler()
 obstacles_handler = ObstaclesHandler()
-
-PLACE_OBSTACLE = pygame.USEREVENT + 1
-pygame.time.set_timer(PLACE_OBSTACLE, 2000)
-
-PLACE_BONUS_POINT = pygame.USEREVENT + 2
-pygame.time.set_timer(PLACE_BONUS_POINT, 20000)
-
-PLACE_SUPER_BONUS_POINT = pygame.USEREVENT + 3
-pygame.time.set_timer(PLACE_SUPER_BONUS_POINT, 50000)
 
 while True:
     for event in pygame.event.get():
