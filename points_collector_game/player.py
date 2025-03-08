@@ -1,7 +1,7 @@
 import pygame
 
 from points_collector_game.configurations import LIGHT_YELLOW, SCREEN_WIDTH, SCREEN_HEIGHT, player_running_images, \
-    player_idle_images
+    player_idle_images, player_hurt_images
 from points_collector_game.points import SuperPoint
 
 
@@ -22,6 +22,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.width -= 20
         self.health = self.MAX_HEALTH
         self.score = 0
+        self.is_hurt = False
 
     def idle(self):
         if self.IDLE_VAR >= len(player_idle_images):
@@ -57,7 +58,13 @@ class Player(pygame.sprite.Sprite):
                 points.remove(current_point)
 
     def take_damage(self, obstacle):
+        for hurt_image in player_hurt_images:
+            self.surf = hurt_image
+            self.surf = pygame.transform.smoothscale(self.surf, self.SIZE)
+
         if self.health - obstacle.DAMAGE < 0:
             self.health = 0
         else:
             self.health -= obstacle.DAMAGE
+
+        self.is_hurt = False

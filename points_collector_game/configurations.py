@@ -36,6 +36,10 @@ player_running_images = [
     pygame.image.load('images/redhat_boy_sprite/running/Run (4).png').convert_alpha(),
 ]
 
+player_hurt_images = [
+    pygame.image.load(f'images/redhat_boy_sprite/hurt/Hurt ({number}).png').convert_alpha() for number in range(1, 8 + 1)
+]
+
 dinosaur_walking_images = [
     pygame.image.load(f'images/dino_sprite/walking/Walk ({number}).png').convert_alpha() for number in range(1, 10 + 1)
 ]
