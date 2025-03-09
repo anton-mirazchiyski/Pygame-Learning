@@ -12,8 +12,8 @@ BLUE_COLOR = (30, 144, 255)
 RED_COLOR = (205, 92, 92)
 GREEN_COLOR = (8, 143, 143)
 
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 700
+SCREEN_WIDTH = 1600
+SCREEN_HEIGHT = 900
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Points Collector')

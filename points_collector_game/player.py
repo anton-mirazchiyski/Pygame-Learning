@@ -69,7 +69,7 @@ class Player(pygame.sprite.Sprite):
             self.health -= obstacle.DAMAGE
 
     def display_lives(self):
-        horizontal_position, vertical_position = 140, 605
+        horizontal_position, vertical_position = 140, 805
         size = 20
 
         for life in range(self.lives):

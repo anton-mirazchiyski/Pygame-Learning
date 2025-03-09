@@ -3,7 +3,7 @@ from points_collector_game.configurations import score_font, player_health_font,
 
 class TextHandler:
     SCORE_COORDINATES = (40, 40)
-    HEALTH_COORDINATES = (40, 600)
+    HEALTH_COORDINATES = (40, 800)
 
     def handle_player_score(self, score):
         surface = score_font.render(f'Your score: {score}', True, GREEN_COLOR)
