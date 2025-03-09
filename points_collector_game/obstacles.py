@@ -52,8 +52,9 @@ class ObstaclesHandler:
                 obstacle.kill()
 
     @staticmethod
-    def handle_collided_obstacle(collided_obstacle):
+    def handle_collided_obstacle(collided_obstacle, player):
         if collided_obstacle.visibility_interval > 2:
             collided_obstacle.kill()
+            player.take_damage(collided_obstacle)
         collided_obstacle.is_visible = not collided_obstacle.is_visible
         collided_obstacle.visibility_interval += 1

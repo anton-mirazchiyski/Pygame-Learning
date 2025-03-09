@@ -22,7 +22,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.width -= 20
         self.health = self.MAX_HEALTH
         self.score = 0
-        self.is_hurt = False
 
     def idle(self):
         if self.IDLE_VAR >= len(player_idle_images):
@@ -66,5 +65,3 @@ class Player(pygame.sprite.Sprite):
             self.health = 0
         else:
             self.health -= obstacle.DAMAGE
-
-        self.is_hurt = False

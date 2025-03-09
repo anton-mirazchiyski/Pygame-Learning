@@ -23,7 +23,7 @@ while True:
             bonus_points_handler.add_bonus_point()
         if event.type == PLACE_SUPER_BONUS_POINT:
             bonus_points_handler.add_super_point()
-        if event.type == pygame.MOUSEMOTION and not player.is_hurt:
+        if event.type == pygame.MOUSEMOTION:
             player.move()
         else:
             player.idle()
@@ -55,13 +55,11 @@ while True:
         if obstacle.is_visible:
             screen.blit(obstacle.surf, obstacle.rect)
         if obstacle.has_collided:
-            obstacles_handler.handle_collided_obstacle(obstacle)
+            obstacles_handler.handle_collided_obstacle(obstacle, player)
 
     collided_obstacle = pygame.sprite.spritecollideany(player, obstacles_handler.obstacles)
     if collided_obstacle:
         collided_obstacle.has_collided = True
-        player.is_hurt = True
-        player.take_damage(collided_obstacle)
 
     screen.blit(
         text_handler.handle_player_score(player.score)[0],
