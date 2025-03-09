@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 import pygame
 
 from points_collector_game.configurations import SCREEN_WIDTH, SCREEN_HEIGHT, screen, RED_COLOR, BLUE_COLOR, \
-    DARK_GRAY
+    DARK_GRAY, GREEN_COLOR
 
 
 class Point(ABC):
@@ -22,7 +22,7 @@ class Point(ABC):
 
 
 class NormalPoint(Point):
-    COLOR = RED_COLOR
+    COLOR = GREEN_COLOR
 
     def __init__(self):
         self.radius = 10

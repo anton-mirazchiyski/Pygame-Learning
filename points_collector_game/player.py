@@ -1,13 +1,14 @@
 import pygame
 
 from points_collector_game.configurations import LIGHT_YELLOW, SCREEN_WIDTH, SCREEN_HEIGHT, player_running_images, \
-    player_idle_images, player_hurt_images
+    player_idle_images, player_hurt_images, screen, BRICK_RED
 from points_collector_game.points import SuperPoint
 
 
 class Player(pygame.sprite.Sprite):
     SIZE = (140, 140)
     MAX_HEALTH = 100
+    MAX_LIVES = 4
     IDLE_VAR = 0
     MOVEMENT_VAR = 0
 
@@ -21,6 +22,7 @@ class Player(pygame.sprite.Sprite):
         ))
         self.rect.width -= 20
         self.health = self.MAX_HEALTH
+        self.lives = self.MAX_LIVES
         self.score = 0
 
     def idle(self):
@@ -65,3 +67,12 @@ class Player(pygame.sprite.Sprite):
             self.health = 0
         else:
             self.health -= obstacle.DAMAGE
+
+    def display_lives(self):
+        horizontal_position, vertical_position = 140, 605
+        size = 20
+
+        for life in range(self.lives):
+            horizontal_position += 45
+            rect = pygame.Rect((horizontal_position, vertical_position), (size, size))
+            pygame.draw.rect(screen, BRICK_RED, rect)

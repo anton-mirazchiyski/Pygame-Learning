@@ -68,5 +68,7 @@ while True:
         text_handler.handle_player_health(player.health)[0],
         text_handler.handle_player_health(player.health)[1])
 
+    player.display_lives()
+
     pygame.display.flip()
     clock.tick(20)
