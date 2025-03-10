@@ -63,8 +63,9 @@ class Player(pygame.sprite.Sprite):
             self.surf = hurt_image
             self.surf = pygame.transform.smoothscale(self.surf, self.SIZE)
 
-        if self.health - obstacle.DAMAGE < 0:
-            self.health = 0
+        if self.health - obstacle.DAMAGE <= 0:
+            self.lives -= 1
+            self.health = self.MAX_HEALTH if self.lives > 0 else 0
         else:
             self.health -= obstacle.DAMAGE
 
