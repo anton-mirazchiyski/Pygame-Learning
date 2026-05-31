@@ -12,7 +12,7 @@ class Obstacle(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load('images/dino_sprite/walking/Walk (1).png').convert_alpha()
+        self.surf = pygame.image.load('assets/dino_sprite/walking/Walk (1).png').convert_alpha()
         self.surf.set_colorkey(LIGHT_YELLOW)
         self.surf = pygame.transform.smoothscale(self.surf, self.SIZE)
         self.rect = self.surf.get_rect(center=(
