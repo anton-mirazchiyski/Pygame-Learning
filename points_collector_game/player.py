@@ -14,7 +14,7 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load('images/redhat_boy_sprite/idle/Idle (6).png').convert_alpha()
+        self.surf = pygame.image.load('assets/redhat_boy_sprite/idle/Idle (6).png').convert_alpha()
         self.surf.set_colorkey(LIGHT_YELLOW)
         self.surf = pygame.transform.smoothscale(self.surf, self.SIZE)
         self.rect = self.surf.get_rect(center=(
@@ -70,7 +70,7 @@ class Player(pygame.sprite.Sprite):
             self.health -= obstacle.DAMAGE
 
     def display_lives(self):
-        horizontal_position, vertical_position = 140, 805
+        horizontal_position, vertical_position = 140, SCREEN_HEIGHT - 100
         size = 20
 
         for life in range(self.lives):
